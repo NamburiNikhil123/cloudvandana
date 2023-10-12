@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .form-container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .gender-label {
+            margin-right: 10px;
+        }
+        
+        .buttons {
+            text-align: center;
+        }
+        
+        #popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 100;
+        }
+        
+        #popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="survey-form">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" required>
+            
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" required>
+            
+            <label for="date-of-birth">Date of Birth</label>
+            <input type="date" id="date-of-birth" required>
+            
+            <label for="country">Country</label>
+            <select id="country" required>
+                <option value="">Select Country</option>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="UK">UK</option>
+                <!-- Add more country options here -->
+            </select>
+            
+            <label>Gender</label>
+            <label class="gender-label"><input type="checkbox" name="gender" value="Male"> Male</label>
+            <label class="gender-label"><input type="checkbox" name="gender" value="Female"> Female</label>
+            <label class="gender-label"><input type="checkbox" name="gender" value="Other"> Other</label>
+            
+            <label for="profession">Profession</label>
+            <input type="text" id="profession" required>
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+            
+            <label for="mobile-number">Mobile Number</label>
+            <input type="tel" id="mobile-number" required>
+            
+            <div class="buttons">
+                <button type="submit">Submit</button>
+                <button type="button" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+    
+    <div id="popup-container">
+        <div id="popup-content">
+            <h2>Survey Data</h2>
+            <div id="popup-data"></div>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+    
+    <script>
+        const form = document.getElementById("survey-form");
+        const popupContainer = document.getElementById("popup-container");
+        const popupContent = document.getElementById("popup-content");
+        const popupData = document.getElementById("popup-data");
+        
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            let dataString = "";
+            for (const pair of formData.entries()) {
+                dataString += `<p><strong>${pair[0]}:</strong> ${pair[1]}</p>`;
+            }
+            popupData.innerHTML = dataString;
+            popupContainer.style.display = "block";
+        });
+        
+        function resetForm() {
+            form.reset();
+        }
+        
+        function closePopup() {
+            popupContainer.style.display = "none";
+            resetForm();
+        }
+    </script>
+</body>
+</html>
